@@ -1,30 +1,66 @@
 package com.example.innotek.demobankchallenge.service.impl;
 
-import com.example.innotek.demobankchallenge.config.RestConsumer;
+import com.example.innotek.demobankchallenge.config.TemplateSettings;
 import com.example.innotek.demobankchallenge.model.balance.Balance;
+import com.example.innotek.demobankchallenge.model.banktransfer.BankTransfer;
 import com.example.innotek.demobankchallenge.model.banktransfer.BankTransferResult;
-import com.example.innotek.demobankchallenge.model.server.ServerResponse;
+import com.example.innotek.demobankchallenge.model.transaction.Transaction;
 import com.example.innotek.demobankchallenge.model.transaction.TransactionPayload;
 import com.example.innotek.demobankchallenge.service.BankAccountService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+
+import java.time.LocalDate;
+import java.util.Collections;
+import java.util.List;
 
 @Service
 public class BankAccountServiceImpl implements BankAccountService {
 
-    @Autowired
-    private RestConsumer restConsumer;
+    private TemplateSettings settings = new TemplateSettings();
+
+    private final WebClient webClient = WebClient.builder()
+            .baseUrl(settings.getBaseUrlApi())
+            .defaultCookie("cookieKey", "cookieValue")
+            .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+            .defaultUriVariables(Collections.singletonMap("url", settings.getBaseUrlApi()))
+            .build();
 
     @Override
-    public ServerResponse<Balance> getBalance(int accountId) {return null;}
+    public Balance getBalance(int accountId) {
 
-    @Override
-    public ServerResponse<BankTransferResult> moneyTransfer(String from, String to, Double amount) {
-        return null;
+        Balance response = webClient
+                .get()
+                .uri("accounts/{accountId}/balance", accountId)
+                .retrieve()
+                .bodyToMono(Balance.class).block();
+        return response;
+    }
+
+    @Override //Questo forse non funzionerà
+    public BankTransferResult moneyTransfers(int accountId, String timeZone, BankTransfer moneyTransfer) {
+        BankTransferResult response = webClient
+                .get()
+                .uri("accounts/{accountId}/payments/money-transfers", accountId)
+                .retrieve()
+                .bodyToMono(BankTransferResult.class).block();
+        return response;
     }
 
     @Override
-    public ServerResponse<TransactionPayload> getTransactions(int accountId) {
-        return null;
+    public TransactionPayload getTransactions(int accountId, LocalDate from, LocalDate to) {
+        TransactionPayload response = webClient
+                .get()
+                .uri("accounts/{accountId}/transactions", accountId)
+                .retrieve()
+                .bodyToMono(TransactionPayload.class).block();
+        return response;
+    }
+
+    @Override
+    public void persistTransactions(int accountId, List<Transaction> list) {
+        //Qua serve la repository
     }
 }
