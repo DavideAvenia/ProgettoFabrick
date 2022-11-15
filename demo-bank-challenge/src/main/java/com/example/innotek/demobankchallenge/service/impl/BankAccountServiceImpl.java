@@ -19,7 +19,7 @@ import java.util.List;
 @Service
 public class BankAccountServiceImpl implements BankAccountService {
 
-    private TemplateSettings settings = new TemplateSettings();
+    private final TemplateSettings settings = new TemplateSettings();
 
     private final WebClient webClient = WebClient.builder()
             .baseUrl(settings.getBaseUrlApi())
