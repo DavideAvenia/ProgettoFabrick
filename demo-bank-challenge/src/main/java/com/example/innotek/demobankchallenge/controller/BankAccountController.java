@@ -5,7 +5,7 @@ import com.example.innotek.demobankchallenge.model.balance.ServerResponseBalance
 import com.example.innotek.demobankchallenge.model.banktransfer.BankTransfer;
 import com.example.innotek.demobankchallenge.model.banktransfer.BankTransferResult;
 import com.example.innotek.demobankchallenge.model.banktransfer.ServerResponseBankTransferResult;
-import com.example.innotek.demobankchallenge.model.mapper.BankAccountMapper;
+import com.example.innotek.demobankchallenge.mapper.BankAccountMapper;
 import com.example.innotek.demobankchallenge.model.transaction.ServerResponseTransactions;
 import com.example.innotek.demobankchallenge.model.transaction.TransactionPayload;
 import com.example.innotek.demobankchallenge.service.BankAccountService;

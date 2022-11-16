@@ -5,12 +5,10 @@ import com.example.innotek.demobankchallenge.model.banktransfer.BankTransfer;
 import com.example.innotek.demobankchallenge.model.banktransfer.BankTransferResult;
 import com.example.innotek.demobankchallenge.model.transaction.Transaction;
 import com.example.innotek.demobankchallenge.model.transaction.TransactionPayload;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@Service
 public interface BankAccountService {
     Balance getBalance(int accountId);
 
