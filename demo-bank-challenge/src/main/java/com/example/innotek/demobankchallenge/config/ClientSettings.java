@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TemplateSettings {
+public class ClientSettings {
 
     @Value("${api.sandbox.base_url_api:undefined}")
     private String baseUrlApi;
