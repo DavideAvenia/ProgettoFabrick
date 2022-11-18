@@ -1,21 +1,17 @@
 package com.example.innotek.demobankchallenge.service;
 
-import com.example.innotek.demobankchallenge.model.balance.Balance;
+import com.example.innotek.demobankchallenge.model.balance.ServerResponseBalance;
 import com.example.innotek.demobankchallenge.model.banktransfer.BankTransfer;
-import com.example.innotek.demobankchallenge.model.banktransfer.BankTransferResult;
-import com.example.innotek.demobankchallenge.model.transaction.Transaction;
-import com.example.innotek.demobankchallenge.model.transaction.TransactionPayload;
-import reactor.core.publisher.Mono;
+import com.example.innotek.demobankchallenge.model.banktransfer.ServerResponseBankTransferResult;
+import com.example.innotek.demobankchallenge.model.transaction.ServerResponseTransactions;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public interface BankAccountService {
-    Mono<Balance> getBalance(int accountId);
+    ServerResponseBalance getBalance(int accountId);
 
-    BankTransferResult moneyTransfers(int accountId, String timeZone, BankTransfer moneyTransfer);
+    ServerResponseBankTransferResult moneyTransfers(int accountId, String timeZone, BankTransfer moneyTransfer);
 
-    TransactionPayload getTransactions(int accountId, LocalDate from, LocalDate to);
+    ServerResponseTransactions getTransactions(int accountId, LocalDate from, LocalDate to);
 
-    void persistTransactions(int accountId, List<Transaction> list);
 }
